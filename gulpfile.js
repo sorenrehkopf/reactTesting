@@ -3,7 +3,7 @@ const gulp = require('gulp'),
 	  shell = require('gulp-shell');
 
 const paths = {
-	scripts:['public/src/scripts/*.jsx']
+	scripts:['public/src/scripts/*.jsx','public/src/scripts/**/*.jsx']
 }
 
 gulp.task('start',['build','watch','serve']);

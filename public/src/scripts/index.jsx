@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
-class Home extends Component{
-	render(){
-		return(
-			<div>
-				<h1>HEllo wow what a thing woah no way!</h1>
-			</div>
-			)
-	}
-}
+//custom components
+import Main from './components/main.component.jsx';
+import Home from './components/home.component.jsx';
+import About from './components/about.component.jsx';
 
-render(<Home />, document.getElementById('app'));
+render(<Router history={browserHistory}>
+		<Route path="/" component={Main}>
+			<IndexRoute component={Home}/>
+			<Route path="/about" component={About}/>
+		</Route>
+	</Router>, 
+	document.getElementById('app')
+);
