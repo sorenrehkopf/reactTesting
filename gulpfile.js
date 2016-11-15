@@ -3,7 +3,9 @@ const gulp = require('gulp'),
 	  shell = require('gulp-shell'),
 	  proxy = require('http-proxy-middleware'),
 	  sass = require('gulp-sass'),
-	  nodemon = require('gulp-nodemon');
+	  nodemon = require('gulp-nodemon'),
+	  babel = require('gulp-babel'),
+	  webpack = require('gulp-webpack');
 
 const paths = {
 	scripts:['public/src/scripts/*.jsx','public/src/scripts/**/*.jsx'],
@@ -38,9 +40,8 @@ gulp.task('serve',function(){
 
 gulp.task('build:scripts',function(){
 	return gulp.src(paths.scripts)
-	.pipe(shell([
-		'npm run build'
-	]))
+	// .pipe(webpack(require('./webpack.config.js')))
+	.pipe(shell('webpack'))
 	.pipe(connect.reload());
 });
 
