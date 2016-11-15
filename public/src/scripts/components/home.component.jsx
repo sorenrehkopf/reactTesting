@@ -7,7 +7,7 @@ var socket = io("http://localhost:3000");
 
 class Home extends Component{
 	constructor(){
-		console.log('hey!!!!!!!');
+		console.log('hey there.');
 		super();
 		this.message = '';
 		this.postits = [];
@@ -23,7 +23,7 @@ class Home extends Component{
 		this.updateThings = function(data){
 			console.log(data);
 			var postits = this.postits;
-			postits.push(<p key={postits.length}>{data.message}</p>);
+			postits.push(data.message);
 			this.setState({postits:postits});
 		}.bind(this);
 	}
@@ -32,12 +32,14 @@ class Home extends Component{
 		socket.on('new hello',that.updateThings);
 	}
 	render(){
+		var notes = this.postits.map(()=>{
+
+		});
 		return(
 			<div>
-				<h1>HEllo wow what a thing woah no way!</h1>
 				<input onInput={this.updateMessage}></input>
 				<button onClick={this.emit}>Emit the thing!</button>
-				{this.postits}
+				{this.notes}
 			</div>
 			)
 	}

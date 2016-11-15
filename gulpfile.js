@@ -39,10 +39,12 @@ gulp.task('serve',function(){
 });
 
 gulp.task('build:scripts',function(){
-	return gulp.src(paths.scripts)
-	// .pipe(webpack(require('./webpack.config.js')))
-	.pipe(shell('webpack'))
+	var task = gulp.src(paths.scripts)
+	.pipe(webpack(require('./webpack.config.js')))
+	// .pipe(shell('webpack'))
+	.pipe(gulp.dest('public/build/scripts'))
 	.pipe(connect.reload());
+	return task;
 });
 
 gulp.task('build:styles',function(){

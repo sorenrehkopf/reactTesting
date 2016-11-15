@@ -27151,37 +27151,6 @@
 					'div',
 					null,
 					_react2.default.createElement(
-						'nav',
-						null,
-						_react2.default.createElement(
-							_reactRouter.Link,
-							{ to: '/' },
-							_react2.default.createElement(
-								'button',
-								null,
-								'Home'
-							)
-						),
-						_react2.default.createElement(
-							_reactRouter.Link,
-							{ to: '/about' },
-							_react2.default.createElement(
-								'button',
-								null,
-								'About'
-							)
-						),
-						_react2.default.createElement(
-							_reactRouter.Link,
-							{ to: '/things' },
-							_react2.default.createElement(
-								'button',
-								null,
-								'Things'
-							)
-						)
-					),
-					_react2.default.createElement(
 						'div',
 						{ id: 'app' },
 						this.props.children
@@ -27229,15 +27198,13 @@
 
 	var socket = (0, _socket3.default)("http://localhost:3000");
 
-	// socket.on('new hello',function(e){console.log('received!',e)});
-
 	var Home = function (_Component) {
 		_inherits(Home, _Component);
 
 		function Home() {
 			_classCallCheck(this, Home);
 
-			console.log('hey!!!!!!!');
+			console.log('hey there.');
 
 			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
 
@@ -27255,11 +27222,7 @@
 			_this.updateThings = function (data) {
 				console.log(data);
 				var postits = this.postits;
-				postits.push(_react2.default.createElement(
-					'p',
-					{ key: postits.length },
-					data.message
-				));
+				postits.push(data.message);
 				this.setState({ postits: postits });
 			}.bind(_this);
 			return _this;
@@ -27274,21 +27237,17 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				var notes = this.postits.map(function () {});
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(
-						'h1',
-						null,
-						'HEllo wow what a thing woah no way!'
-					),
 					_react2.default.createElement('input', { onInput: this.updateMessage }),
 					_react2.default.createElement(
 						'button',
 						{ onClick: this.emit },
 						'Emit the thing!'
 					),
-					this.postits
+					this.notes
 				);
 			}
 		}]);
