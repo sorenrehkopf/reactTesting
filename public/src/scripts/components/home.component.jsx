@@ -13,21 +13,25 @@ class Home extends Component{
 		this.boards = [
 			{
 				name:'start',
-				postits:[]
+				postits:[],
+				newNotes:0
 			},
 			{
 				name:'continue',
-				postits:[]
+				postits:[],
+				newNotes:0
 			},
 			{
 				name:'finish',
-				postits:[]
+				postits:[],
+				newNotes:0
 			}];
 		this.currentBoard = 0;
 		this.emit = function(e){
 			e.preventDefault();
 			var message = this.message;
-			socket.emit('hello',{message:message});
+			var board = this.currentBoard;
+			socket.emit('hello',{message:message,board:board});
 			document.getElementsByTagName('input')[0].value = '';
 			this.message = '';
 		}.bind(this);
@@ -36,9 +40,10 @@ class Home extends Component{
 		}.bind(this);
 		this.addNote = function(data){
 			console.log('what',data);
-			var postits = this.boards[this.currentBoard].postits;
+			var postits = this.boards[data.board].postits;
 			postits.push(data.message);
-			this.setState({postits:postits});
+			if(data.board!==this.currentBoard) this.boards[data.board].newNotes ++;
+			this.forceUpdate();
 		}.bind(this);
 	}
 	componentDidMount(){
@@ -54,9 +59,10 @@ class Home extends Component{
 		var buttons = this.boards.map((board,i)=>{
 			var changeBoard = function(){
 				this.currentBoard = i;
-				this.setState({currentBoard:i});
+				this.boards[i].newNotes = 0;
+				this.forceUpdate();
 			}.bind(this);
-			return <button key={i} onClick={changeBoard}>{board.name}</button>
+			return <button key={i} onClick={changeBoard}>{board.name} {board.newNotes?board.newNotes:''}</button>
 		});
 		return(
 			<div>

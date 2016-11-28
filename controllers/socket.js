@@ -9,7 +9,7 @@ var socket = function(io){
 		socket.on('hello',function(e){
 			console.log('hello received!',e);
 			hellos.push(e.message);
-			socket.emit('new hello',{message:e.message});
+			io.emit('new hello',e);
 		});
 	});
 };

@@ -27208,19 +27208,23 @@
 			_this.message = '';
 			_this.boards = [{
 				name: 'start',
-				postits: []
+				postits: [],
+				newNotes: 0
 			}, {
 				name: 'continue',
-				postits: []
+				postits: [],
+				newNotes: 0
 			}, {
 				name: 'finish',
-				postits: []
+				postits: [],
+				newNotes: 0
 			}];
 			_this.currentBoard = 0;
 			_this.emit = function (e) {
 				e.preventDefault();
 				var message = this.message;
-				socket.emit('hello', { message: message });
+				var board = this.currentBoard;
+				socket.emit('hello', { message: message, board: board });
 				document.getElementsByTagName('input')[0].value = '';
 				this.message = '';
 			}.bind(_this);
@@ -27229,9 +27233,10 @@
 			}.bind(_this);
 			_this.addNote = function (data) {
 				console.log('what', data);
-				var postits = this.boards[this.currentBoard].postits;
+				var postits = this.boards[data.board].postits;
 				postits.push(data.message);
-				this.setState({ postits: postits });
+				if (data.board !== this.currentBoard) this.boards[data.board].newNotes++;
+				this.forceUpdate();
 			}.bind(_this);
 			return _this;
 		}
@@ -27255,12 +27260,15 @@
 				var buttons = this.boards.map(function (board, i) {
 					var changeBoard = function () {
 						this.currentBoard = i;
-						this.setState({ currentBoard: i });
+						this.boards[i].newNotes = 0;
+						this.forceUpdate();
 					}.bind(_this2);
 					return _react2.default.createElement(
 						'button',
 						{ key: i, onClick: changeBoard },
-						board.name
+						board.name,
+						' ',
+						board.newNotes ? board.newNotes : ''
 					);
 				});
 				return _react2.default.createElement(
