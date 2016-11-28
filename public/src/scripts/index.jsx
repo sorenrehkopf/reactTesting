@@ -7,7 +7,6 @@ import Main from './components/main.component.jsx';
 import Home from './components/home.component.jsx';
 import About from './components/about.component.jsx';
 import Things from './components/things.component.jsx';
-import Thing from './components/thing.component.jsx';
 
 render(<Router history={browserHistory}>
 		<Route path="/" component={Main}>
